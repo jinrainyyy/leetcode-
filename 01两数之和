@@ -1,0 +1,58 @@
+#Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+
+#You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+#Example:
+
+#Given nums = [2, 7, 11, 15], target = 9,
+
+#Because nums[0] + nums[1] = 2 + 7 = 9,
+#return [0, 1].
+
+
+import numpy as np
+from collections import defaultdict
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+
+#法一：个人暴力解法：两个for循环，从第一个元素开始，查找列表里余下的元素有没有符合要求的目标元素（相加等于target)，若有则返回该元素索引，否则查找下一个元素。
+        for i in range(len(nums)):
+            for j in range(len(nums)-i-1): 
+                if ((target - nums[i]) ==  nums[i+j+1]):
+                    return [i, i+j+1]
+耗时：
+
+#法二：将法一中的第二层循环用直接用index查找代替。
+  !失败：判断语句当list中找不到需要的值时直接报错（valueerror）而不是None。
+  利用try和continue：        
+        for i in range(len(nums)): 
+            try: 
+                j = nums.index((target - nums[i]), i+1)
+            except:
+                continue #改成pass也是一样的效果
+            else:
+                return [i, nums.index((target - nums[i]), i+1)]
+
+#法三：参考leetcode中其他人的答案：利用hash table的思想利用enumerate避免list中的重复元素影响。
+        dic = {}
+        for ind, num in enumerate(nums):
+            dic[num] = ind #若有重复的元素此时字典中储存的是最后一个重复元素的索引
+        
+        for ind, num in enumerate(nums):
+            j = dic.get(target-num)
+            if((ind != j) and (j is not None)):
+                return[ind, j]
+     #简化：
+        dic = {}
+        for ind, num in enumerate(nums):
+            j = target - num
+            if (j in nums and dic.get(j) is not None):
+                return [dic.get(j), ind]
+            dic[num] = ind
+
+
