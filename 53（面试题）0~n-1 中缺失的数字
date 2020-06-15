@@ -1,0 +1,44 @@
+一个长度为n-1的递增排序数组中的所有数字都是唯一的，并且每个数字都在范围0～n-1之内。在范围0～n-1内的n个数字中有且只有一个数字不在该数组中，请找出这个数字。
+
+示例 1:
+
+输入: [0,1,3]
+输出: 2
+
+示例 2:
+
+输入: [0,1,2,3,4,5,6,7,9]
+输出: 8
+
+限制：
+1 <= 数组长度 <= 10000
+
+法一：比较数组与n个数字和的差。注意：1.数组长度表示 2.和的计算可用数学公式。
+
+``` python
+class Solution(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+
+        sum1 = sum(nums)
+        # l = [i for i in range(len(nums)+1)]
+        # sum2 = sum(l)
+        sum2 = len(nums) * (len(nums) + 1) // 2
+        return sum2 - sum1
+```
+
+法二： 利用二分法。比较数值与对应数组索引是否一致。
+```python
+        i, j = 0, len(nums) - 1
+        while (i <= j):
+            m = (i + j) // 2
+            if(nums[m] == m):
+                i = i + 1
+            else: j = j - 1
+        return i
+```
+参考题解：https://leetcode-cn.com/problems/que-shi-de-shu-zi-lcof/solution/mian-shi-ti-53-ii-0n-1zhong-que-shi-de-shu-zi-er-f/
+<p>note：移动指针时一位一位的移，而不是直接移到中间。（待尝试）
