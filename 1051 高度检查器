@@ -1,0 +1,56 @@
+```python
+from collections import Counter
+import numpy as np
+class Solution(object):
+    def heightChecker(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        # m = 0
+        # heights_old = heights[:]
+        # for height in range(len(heights)):
+        #     new = heights[height+1:]
+        #     if(new):
+        #         check = min(new)
+        #         if heights[height] > check:
+        #             ind = new.index(check) + height + 1
+        #             heights[ind] = heights[height]
+        #             heights[height] = min(new)
+        #     if  heights[height] != heights_old[height]:
+        #         m += 1          
+        # return m
+
+        # time = 0
+        # new = sorted(heights)
+        # for i in range(len(heights)):
+        #     if(heights[i] != new[i]):
+        #         time += 1
+        # return time
+
+        # ans = 0
+        # j = 0
+        # new = np.zeros(101)
+        # for i in range(len(heights)):
+        #     new[heights[i]] += 1
+        # for i in range(len(new)):
+        #     while new[i]:
+        #         if(heights[j] != i):
+        #             ans += 1
+        #         j += 1
+        #         new[i] -= 1  
+        # return ans    
+
+        d = [0] * 101
+        ans = j = 0
+        for i in heights:
+            d[i] += 1
+        
+        for i in range(1, 101):
+            while d[i]:
+                if heights[j] != i:
+                    ans += 1
+                j += 1
+                d[i] -= 1
+        return ans
+```
